@@ -5,14 +5,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
-
-
-
-
+import { RippleModule } from 'primeng/ripple';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { StyleClassModule } from 'primeng/styleclass';
 
 
 
@@ -20,6 +18,7 @@ import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { FormsModule } from '@angular/forms';
 import { SourcesComponent } from './components/sources/sources.component';
 import { PanelComponent } from './components/panel/panel.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
@@ -36,9 +35,12 @@ import { PanelComponent } from './components/panel/panel.component';
     AutoCompleteModule,
     FormsModule,
     HttpClientModule,
+    StyleClassModule,
     InputTextModule,
     TableModule,
-    MultiSelectModule
+    MultiSelectModule,
+    RippleModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

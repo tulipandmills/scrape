@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SelectItem, SelectItemGroup } from 'primeng/api';
-import { SearchService } from 'src/app/services/search.service';
+import { SearchService } from '../../services/search.service';
 import * as _ from 'lodash';
 
 
