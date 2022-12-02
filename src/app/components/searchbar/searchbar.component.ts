@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 import { SearchService } from '../../services/search.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class SearchbarComponent implements OnInit {
   text: any;
   pages: any;
   headers: string[] = [];
+  message?: string;
   constructor(private _searchService: SearchService) { }
 
   @Input('disabled') disabled = false;
@@ -27,6 +29,46 @@ export class SearchbarComponent implements OnInit {
   }
 
   search(e: any) {
+    if (typeof (e.target?.value) !== 'undefined') {
+      this.message = "loading"
+      this._searchService.search(e.target.value).then((r: any) => {
+        if (r.body?.success) {
+          if (typeof (r.body.data) !== 'undefined') {
+            this.results = r.body.data;
+            //JSON type headers
+            this.headers = Object.keys(this.results[0])
+            if (typeof (this.headers) === 'undefined' || this.headers.length === 0 || this.headers[0] === '0') {
+              //XML type headers
+              this.headers = this.results[0].map((r: any) => Object.keys(r)[0])
+            }
+            this.message = "done"
+          } else {
+            this.results = [];
+            this.headers = [];
+          }
+        } else {
+          //todo
+          this.message = "An error occured"
+          console.error('Error to be handled', r);
+        }
+
+
+      });
+    }
+  }
+
+  arrayToObject(arr: any[]) {
+    let o = {}
+    let i = 0;
+    arr.forEach((item) => {
+      Object.assign(o, { [i]: item })
+      i++;
+
+    })
+    return o
+  }
+
+  search_dep(e: any) {
     if (typeof (e.target?.value) !== 'undefined') {
       this._searchService.search(e.target.value).then((r: any) => {
         if (r.body?.success) {
