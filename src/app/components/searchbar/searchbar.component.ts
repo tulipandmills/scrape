@@ -29,6 +29,9 @@ export class SearchbarComponent implements OnInit {
   }
 
   search(e: any) {
+    //TODO: Take all headers from all sites
+    //TODO: Filter for non-term searching queries (like NOS feed)
+    //TODO: Load site configs
     if (typeof (e.target?.value) !== 'undefined') {
       this.message = "loading"
       this._searchService.search(e.target.value).then((r: any) => {
