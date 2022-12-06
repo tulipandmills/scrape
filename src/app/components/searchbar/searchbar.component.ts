@@ -21,7 +21,7 @@ export class SearchbarComponent implements OnInit {
   results: any;
 
   onKeyPressHandler(e: any) {
-    if (e.key == 'Enter' || this.results?.length === 0 || typeof (this.results) === 'undefined') {
+    if (e.key == 'Enter') {
       this.search(e);
       // } else {
       //   this.filter(e);
@@ -38,12 +38,7 @@ export class SearchbarComponent implements OnInit {
         if (r.body?.success) {
           if (typeof (r.body.data) !== 'undefined') {
             this.results = r.body.data;
-            //JSON type headers
-            this.headers = Object.keys(this.results[0])
-            if (typeof (this.headers) === 'undefined' || this.headers.length === 0 || this.headers[0] === '0') {
-              //XML type headers
-              this.headers = this.results[0].map((r: any) => Object.keys(r)[0])
-            }
+            this.headers = r.body.headers;
             this.message = "done"
           } else {
             this.results = [];

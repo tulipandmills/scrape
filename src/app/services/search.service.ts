@@ -21,7 +21,7 @@ export class SearchService {
 
   // }
 
-  search = async (term: string) => {
+  search = (term: string) => {
     const sources = this.sources.join("|");
     const url = `http://localhost:3000/search/${sources}/${term}`;
     const request = new HttpRequest(
