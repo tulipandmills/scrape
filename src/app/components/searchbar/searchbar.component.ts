@@ -55,6 +55,30 @@ export class SearchbarComponent implements OnInit {
     }
   }
 
+  solveChild(data: any, header: string) {
+    let text = data[0][header];
+    if (typeof (text) !== "undefined") {
+      return text;
+    } else {
+      text = data.filter((r: any) => Object.keys(r)[0] === header)[0]?.header;
+      if (typeof (text) !== "undefined") {
+        return text;
+      } else {
+        let obj = data.filter((r: any) => r[header])[0];
+        if ((typeof (obj) !== "undefined")) {
+          text = obj[header]
+        } else {
+          text = undefined;
+        }
+        if (typeof (text) === "string") {
+          return text;
+        } else {
+          return JSON.stringify(text);
+        }
+      }
+    }
+  }
+
   arrayToObject(arr: any[]) {
     let o = {}
     let i = 0;
