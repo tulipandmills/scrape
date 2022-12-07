@@ -9,19 +9,16 @@ import { catchError, of } from 'rxjs';
 })
 export class SearchService {
   sources: string[] = [];
+  searchInput: any;
+
 
   constructor(private http: HttpClient) { }
 
-  // wikiTest = async (term: string) => {
-  //   const request = new HttpRequest(
-  //     "GET", "http://localhost:3000/wiki/" + term, {},
-  //     { reportProgress: true });
-
-  //   return this.http.request(request).toPromise();
-
-  // }
-
   search = (term: string) => {
+    if (typeof (term) === "undefined" || term.length === 0) {
+      term = "%none%"
+    }
+
     const sources = this.sources.join("|");
     const url = `http://localhost:3000/search/${sources}/${term}`;
     const request = new HttpRequest(

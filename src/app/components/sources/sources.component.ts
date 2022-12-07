@@ -26,6 +26,7 @@ interface Country {
 export class SourcesComponent implements OnInit {
 
   @Output() onChange = new EventEmitter();
+  @Output() doSearch = new EventEmitter();
   selectedSources = [];
   groupedSources: any;
 
@@ -53,6 +54,9 @@ export class SourcesComponent implements OnInit {
   setSources(values: any) {
     this._searchService.setSources(values.value);
     this.onChange.emit(values.value);
+    if (values.value.length > 0) {
+      this.doSearch.emit(values.value)
+    }
   }
 
 

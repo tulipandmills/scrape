@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
 import { MessageService } from 'primeng/api';
 import { SearchService } from '../../services/search.service';
@@ -15,6 +15,8 @@ export class SearchbarComponent implements OnInit {
   headers: string[] = [];
   @Output() onResults = new EventEmitter();
   @Output() onHeadersChanged = new EventEmitter();
+
+  @ViewChild('searchInput') searchInput: any;
   constructor(private _searchService: SearchService, private messageService: MessageService) { }
 
   @Input('disabled') disabled = false;
@@ -28,20 +30,19 @@ export class SearchbarComponent implements OnInit {
   onKeyPressHandler(e: any) {
     if (e.key == 'Enter') {
       this.search(e);
-      // } else {
-      //   this.filter(e);
-
     }
   }
 
+  updateValue(e: any) {
+    this._searchService.searchInput = this.searchInput.nativeElement.value;
+  }
+
   search(e: any) {
-    //TODO: Take all headers from all sites
-    //TODO: Filter for non-term searching queries (like NOS feed)
-    //TODO: Load site configs
     if (this._searchService.sources.length > 0) {
-      if (typeof (e.target?.value) !== 'undefined' && e.target?.value.length > 0) {
+      let term = this._searchService.searchInput
+      if (typeof (term) !== 'undefined' && term.length > 0) {
         this.messageService.add({ severity: 'info', summary: 'Bezig met zoeken...', detail: '', key: 'searchingMsg' });
-        this._searchService.search(e.target.value).then((r: any) => {
+        this._searchService.search(term).then((r: any) => {
           if (r.body?.success) {
             if (typeof (r.body.data) !== 'undefined') {
               this.results = r.body.data;

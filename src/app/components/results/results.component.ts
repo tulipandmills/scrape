@@ -23,7 +23,7 @@ export class ResultsComponent {
 
   ngOnChanges(event: any) {
     console.log(event)
-    this.data = this.results
+    this.data = event.results
     this.headers = Object.assign(this.headers, this.headers)
   }
 

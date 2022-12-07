@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { SearchbarComponent } from '../searchbar/searchbar.component';
 
 @Component({
   selector: 'app-panel',
@@ -9,6 +10,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class PanelComponent implements OnInit {
 
   @Output() onResults = new EventEmitter();
+  @ViewChild('searchBar') searchbarComponent: SearchbarComponent | undefined;
   searchbarDisabled: boolean = true;
   results = [];
   headers = [];
@@ -33,6 +35,10 @@ export class PanelComponent implements OnInit {
 
   receivedHeaders(event: any) {
     this.headers = event;
+  }
+
+  sendSearchToSearchBar(event: any) {
+    this.searchbarComponent?.search(event)
   }
 
 }
