@@ -29,7 +29,7 @@ export class SearchbarComponent implements OnInit {
 
   onKeyPressHandler(e: any) {
     if (e.key == 'Enter') {
-      this.search(e);
+      this.search(e,true);
     }
   }
 
@@ -37,7 +37,7 @@ export class SearchbarComponent implements OnInit {
     this._searchService.searchInput = this.searchInput.nativeElement.value;
   }
 
-  search(e: any) {
+  search(e: any, notifyOnEmpty?:boolean) {
     if (this._searchService.sources.length > 0) {
       let term = this._searchService.searchInput
       if (typeof (term) !== 'undefined' && term.length > 0) {
@@ -62,8 +62,10 @@ export class SearchbarComponent implements OnInit {
           }
         });
       } else {
-
-        this.messageService.add({ severity: 'info', summary: 'Zoekterm', detail: 'Vul hier uw zoekterm in, en druk op enter', key: 'otherMsg' });
+if(notifyOnEmpty){
+  this.messageService.add({ severity: 'info', summary: 'Zoekterm', detail: 'Vul hier uw zoekterm in, en druk op enter', key: 'otherMsg' });
+}
+  
       }
 
 
