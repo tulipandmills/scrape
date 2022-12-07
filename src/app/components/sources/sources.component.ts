@@ -27,22 +27,14 @@ export class SourcesComponent implements OnInit {
 
   @Output() onChange = new EventEmitter();
   selectedSources = [];
-  groupedSources: SelectItemGroup[];
+  groupedSources: any;
 
 
   constructor(private _searchService: SearchService) {
 
 
 
-    this.groupedSources = [
-      {
-        label: 'Sources',
-        value: 'sources',
-        items: [
-          { label: 'Not found', value: false },
-        ]
-      },
-    ];
+
 
   }
 
@@ -54,7 +46,7 @@ export class SourcesComponent implements OnInit {
       const m = _.mapValues(items, (item: any, key: any) => {
         return { label: item.human, value: key }
       });
-      this.groupedSources[0].items = _.flatMap(m)
+      this.groupedSources = _.flatMap(m)
     })
   }
 

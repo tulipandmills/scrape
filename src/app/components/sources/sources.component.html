@@ -1,21 +1,7 @@
-<p-multiSelect
-  [options]="groupedSources"
-  [group]="true"
-  [(ngModel)]="selectedSources"
-  defaultLabel="Select sources"
-  scrollHeight="250px"
-  display="chip"
-  [panelStyle]="{ width: '400px' }"
-  optionValue="value"
-  (onChange)="setSources($event)"
->
-  <ng-template let-group pTemplate="group">
-    <div class="flex align-items-center">
-      <i
-        class="pi pi-box"
-        style="font-size: 2rem; display: inline-block; width: 70px"
-      ></i>
-      <span>{{ group.label }}</span>
-    </div>
-  </ng-template>
-</p-multiSelect>
+
+<p-listbox (onChange)="setSources($event)" [checkbox]="true" [showToggleAll]="false" [options]="groupedSources" [(ngModel)]="selectedSources" [multiple]="true" optionLabel="label" optionValue="value">
+     <ng-template pTemplate="header">
+        <i class="pi pi-database pr-3" style="font-size: 2rem"></i>
+        <span class="text-xl font-medium text-700">Bronnen</span>
+    </ng-template>
+</p-listbox>

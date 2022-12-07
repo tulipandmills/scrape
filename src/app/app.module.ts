@@ -14,7 +14,8 @@ import { StyleClassModule } from 'primeng/styleclass';
 
 import { ImageModule } from 'primeng/image';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { Toast, ToastModule } from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { ListboxModule } from 'primeng/listbox';
 
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { FormsModule } from '@angular/forms';
@@ -45,6 +46,7 @@ import { ResultsComponent } from './components/results/results.component';
     InputTextModule,
     TableModule,
     MultiSelectModule,
+    ListboxModule,
     RippleModule,
     TooltipModule,
     ImageModule,

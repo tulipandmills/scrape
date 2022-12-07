@@ -65,10 +65,6 @@ export class SearchbarComponent implements OnInit {
     }
   }
 
-
-
-
-
   arrayToObject(arr: any[]) {
     let o = {}
     let i = 0;
@@ -79,8 +75,6 @@ export class SearchbarComponent implements OnInit {
     })
     return o
   }
-
-
 
   cleanUrlFromImgObject(obj: any) {
     obj = JSON.parse(obj);

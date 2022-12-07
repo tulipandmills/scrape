@@ -1,3 +1,14 @@
-<div><app-searchbar [disabled]="searchbarDisabled" (onResults)="receivedResults($event)" (onHeadersChanged)="receivedHeaders($event)"></app-searchbar></div>
-<div><app-sources (onChange)="sourcesChanged($event)"></app-sources></div>
-<div><app-results [results]="results" [headers]="headers"></app-results></div>
+<div class="flex flex-column">
+    <div class="flex justify-content-center">
+        <div class="flex p-5">
+            <app-searchbar (onResults)="receivedResults($event)" (onHeadersChanged)="receivedHeaders($event)"></app-searchbar>
+        </div>
+       
+    </div>
+     <div class="flex flex-row">
+<div class="flex w-90 p-2"><app-sources (onChange)="sourcesChanged($event)"></app-sources></div>
+<div class="flex p-2"><app-results [results]="results" [headers]="headers"></app-results></div>
+        </div>
+    
+
+
