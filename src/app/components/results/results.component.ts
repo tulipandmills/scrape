@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { clone } from 'lodash';
 
 @Component({
   selector: 'app-results',
@@ -7,9 +8,9 @@ import { Component, Input } from '@angular/core';
 })
 export class ResultsComponent {
   @Input('results') results = [];
-  @Input('headerInput') headerInput = [];
+  @Input('headers') headers = [];
   data = [];
-  headers: any;
+
 
   ngOnInit(): void {
 
@@ -18,7 +19,7 @@ export class ResultsComponent {
   ngOnChanges(event: any) {
     console.log(event)
     this.data = this.results
-    this.headers = new Array(...this.headerInput)
+    this.headers = Object.assign(this.headers, this.headers)
   }
 
   solveChild(data: any, header: string) {
