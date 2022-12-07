@@ -1,4 +1,6 @@
-<div>{{results | json}}</div>
+<div *ngIf="showJson">{{results | json}}</div>
+<p-toast position="top-center" key="searchingMsg"></p-toast>
+<p-toast position="top-center" key="otherMsg"></p-toast>
 <span class="p-input-icon-right">
   <i class="pi pi-search"></i>
   <input
@@ -8,8 +10,7 @@
     [disabled]="disabled"
   />
 </span>
-<div *ngIf="message">{{message}}</div>
-<div>{{headers | json}}</div>
+
 <p-table [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px">
   <ng-template pTemplate="header">
     <tr>

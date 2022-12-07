@@ -2,6 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import * as _ from 'lodash';
+import { MessageService } from 'primeng/api';
 import { SearchService } from '../../services/search.service';
 
 @Component({
@@ -13,19 +14,22 @@ export class SearchbarComponent implements OnInit {
   text: any;
   pages: any;
   headers: string[] = [];
-  message?: string;
-  constructor(private _searchService: SearchService, private sanitizer: DomSanitizer) { }
+  constructor(private _searchService: SearchService, private sanitizer: DomSanitizer, private messageService: MessageService) { }
 
   @Input('disabled') disabled = false;
 
   data = [];
   results: any;
+  showJson = false;
+
+
 
   onKeyPressHandler(e: any) {
     if (e.key == 'Enter') {
       this.search(e);
       // } else {
       //   this.filter(e);
+
     }
   }
 
@@ -34,20 +38,21 @@ export class SearchbarComponent implements OnInit {
     //TODO: Filter for non-term searching queries (like NOS feed)
     //TODO: Load site configs
     if (typeof (e.target?.value) !== 'undefined') {
-      this.message = "loading"
+      this.messageService.add({ severity: 'info', summary: 'Searching...', detail: '', key: 'searchingMsg' });
       this._searchService.search(e.target.value).then((r: any) => {
         if (r.body?.success) {
           if (typeof (r.body.data) !== 'undefined') {
             this.results = r.body.data;
             this.headers = r.body.headers;
-            this.message = "done"
+            this.messageService.clear('searchingMsg');
+            this.messageService.add({ severity: 'success', summary: 'Done', detail: '', key: 'otherMsg' });
           } else {
             this.results = [];
             this.headers = [];
           }
         } else {
           //todo
-          this.message = "An error occured"
+          this.messageService.add({ severity: 'warn', summary: 'Sorry...', detail: 'Something went wrong. If this error reoccures, please contact the developer', key: 'otherMsg' });
           console.error('Error to be handled', r);
         }
 

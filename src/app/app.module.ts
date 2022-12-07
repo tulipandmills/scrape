@@ -14,6 +14,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 
 import { ImageModule } from 'primeng/image';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { Toast, ToastModule } from 'primeng/toast';
 
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { SourcesComponent } from './components/sources/sources.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -45,9 +47,10 @@ import { ButtonModule } from 'primeng/button';
     TooltipModule,
     ImageModule,
     ScrollPanelModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [{ provide: MessageService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
