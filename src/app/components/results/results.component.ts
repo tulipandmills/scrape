@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { clone } from 'lodash';
 
 @Component({
@@ -12,6 +13,10 @@ export class ResultsComponent {
   data = [];
 
 
+  constructor(private sanitizer: DomSanitizer) {
+
+  }
+
   ngOnInit(): void {
 
   }
@@ -23,8 +28,16 @@ export class ResultsComponent {
   }
 
   solveChild(data: any, header: string) {
-    let text = data[header];
+    let text = data[header]
     if (typeof (text) !== "undefined") {
+      if (typeof (text) === "object") {
+        try {
+          const o = JSON.stringify(text);
+          return o;
+        } catch (ex) {
+          return text;
+        }
+      }
       return text;
     } else {
       text = data[header];
@@ -36,14 +49,15 @@ export class ResultsComponent {
     }
   }
 
-  getType(text: string) {
-    if (typeof (text) === "undefined" || text === "") {
+  getType(input: any) {
+    if (typeof (input) === "undefined" || input === "") {
       return "text";
     }
     let o;
     try {
-      o = JSON.parse(text);
+      o = JSON.parse(input);
     } catch (ex) {
+
     }
     if (typeof (o) !== "undefined" && Object.keys(o).length > 0) {
       if (o.type === 'image/jpeg') {
@@ -51,15 +65,24 @@ export class ResultsComponent {
       } else {
         return "json";
       }
-    } else if (text.toString().lastIndexOf("<") > 50) {
+    } else if (input.toString().lastIndexOf("<") > 50) {
       return "html";
-    } else if (text.toString().substring(0, 4) === "http") {
+    } else if (input.toString().substring(0, 4) === "http") {
       return "url";
     }
     else {
       return "text"
     }
   }
+
+  cleanUrlFromImgObject(obj: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(obj.url);
+  }
+
+  openWindow(url: string) {
+    window.open(url, '_new')
+  }
+
 }
 
 
