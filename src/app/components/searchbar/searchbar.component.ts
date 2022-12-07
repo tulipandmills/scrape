@@ -57,11 +57,11 @@ export class SearchbarComponent implements OnInit {
   }
 
   solveChild(data: any, header: string) {
-    let text = data[0][header];
+    let text = data[header];
     if (typeof (text) !== "undefined") {
       return text;
     } else {
-      text = data.filter((r: any) => Object.keys(r)[0] === header)[0]?.header;
+      text = data.filter((r: any) => Object.keys(r)[0] === header)?.header;
       if (typeof (text) !== "undefined") {
         return text;
       } else {

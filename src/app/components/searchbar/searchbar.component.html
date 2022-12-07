@@ -10,11 +10,11 @@
 </span>
 <div *ngIf="message">{{message}}</div>
 <div>{{headers | json}}</div>
-<p-table [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" >
+<p-table [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px">
   <ng-template pTemplate="header">
     <tr>
       <ng-container *ngFor="let header of headers">
-        <th pSortableColumn="header" style="width:20%">{{header}} <p-sortIcon field="header"></p-sortIcon></th>
+        <th [pSortableColumn]="header" style="width:20%">{{header}} <p-sortIcon field="header"></p-sortIcon></th>
       </ng-container>
     </tr>
   </ng-template>
