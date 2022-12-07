@@ -34,7 +34,7 @@
             <td *ngSwitchCase="'url'">
               <button pButton type="button" icon="pi pi-external-link" iconPos="left" (click)="openWindow(solveChild(item,header))" [pTooltip]="solveChild(item,header)" tooltipPosition="bottom"></button>
             </td>
-        <td *ngSwitchDefault>{{solveChild(item,header)}}{{getType(solveChild(item,header))}}</td>
+        <td *ngSwitchDefault>{{solveChild(item,header)}}</td>
         </ng-container>
 </ng-container>
     </tr>
