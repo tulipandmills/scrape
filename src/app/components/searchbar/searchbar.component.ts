@@ -66,21 +66,11 @@ export class SearchbarComponent implements OnInit {
     if (typeof (text) !== "undefined") {
       return text;
     } else {
-      text = data.filter((r: any) => Object.keys(r)[0] === header)?.header;
-      if (typeof (text) !== "undefined") {
+      text = data[header];
+      if (typeof (text) === "string") {
         return text;
       } else {
-        let obj = data.filter((r: any) => r[header])[0];
-        if ((typeof (obj) !== "undefined")) {
-          text = obj[header]
-        } else {
-          text = undefined;
-        }
-        if (typeof (text) === "string") {
-          return text;
-        } else {
-          return JSON.stringify(text);
-        }
+        return JSON.stringify(text);
       }
     }
   }
