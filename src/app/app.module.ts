@@ -12,13 +12,15 @@ import { AppComponent } from './app.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { StyleClassModule } from 'primeng/styleclass';
 
-
+import { ImageModule } from 'primeng/image';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { FormsModule } from '@angular/forms';
 import { SourcesComponent } from './components/sources/sources.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -40,7 +42,10 @@ import { TooltipModule } from 'primeng/tooltip';
     TableModule,
     MultiSelectModule,
     RippleModule,
-    TooltipModule
+    TooltipModule,
+    ImageModule,
+    ScrollPanelModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

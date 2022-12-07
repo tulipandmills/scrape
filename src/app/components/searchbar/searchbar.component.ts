@@ -1,5 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import { SearchService } from '../../services/search.service';
 
@@ -13,7 +14,7 @@ export class SearchbarComponent implements OnInit {
   pages: any;
   headers: string[] = [];
   message?: string;
-  constructor(private _searchService: SearchService) { }
+  constructor(private _searchService: SearchService, private sanitizer: DomSanitizer) { }
 
   @Input('disabled') disabled = false;
 
@@ -90,26 +91,35 @@ export class SearchbarComponent implements OnInit {
     return o
   }
 
-  search_dep(e: any) {
-    if (typeof (e.target?.value) !== 'undefined') {
-      this._searchService.search(e.target.value).then((r: any) => {
-        if (r.body?.success) {
-          if (typeof (r.body.data) !== 'undefined') {
-            this.results = r.body.data;
-            this.headers = Object.keys(this.results[0]);
-          } else {
-            this.results = [];
-            this.headers = [];
-          }
-        } else {
-          //todo
-          console.error('Error to be handled', r);
-        }
-
-
-      });
+  getType(text: string) {
+    if (typeof (text) === "undefined" || text === "") {
+      return "text";
     }
+    let o;
+    try {
+      o = JSON.parse(text);
+    } catch (ex) {
 
+    }
+    if (typeof (o) !== "undefined" && Object.keys(o).length > 0) {
+      if (o.type === 'image/jpeg') {
+        return "image";
+      } else {
+        return "json";
+      }
+    } else if (text.toString().lastIndexOf("<") > 50) {
+      return "html";
+    } else if (text.toString().substring(0, 4) === "http") {
+      return "url";
+    }
+    else {
+      return "text"
+    }
+  }
+
+  cleanUrlFromImgObject(obj: any) {
+    obj = JSON.parse(obj);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(obj.url);
 
   }
 
@@ -128,6 +138,9 @@ export class SearchbarComponent implements OnInit {
     }
   }
 
+  openWindow(url: string) {
+    window.open(url, '_new')
+  }
   clearFilter() {
     this.results = this.pages;
   }
