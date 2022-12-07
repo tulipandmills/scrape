@@ -23,6 +23,7 @@ import { PanelComponent } from './components/panel/panel.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
+import { ResultsComponent } from './components/results/results.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MessageService } from 'primeng/api';
     AppComponent,
     SearchbarComponent,
     SourcesComponent,
-    PanelComponent
+    PanelComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
