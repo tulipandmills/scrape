@@ -1,8 +1,8 @@
 <div class="flex flex-column">
     <div class="flex justify-content-center">
         <div class="flex p-5">
-            <app-searchbar (onResults)="receivedResults($event)" (onHeadersChanged)="receivedHeaders($event)"
-                #searchBar></app-searchbar>
+            <app-searchbar (onResults)="receivedResults($event)" (onReceivedSettings)="receivedSettings($event)"
+                (onHeadersChanged)="receivedHeaders($event)" #searchBar></app-searchbar>
         </div>
 
     </div>
@@ -11,6 +11,6 @@
             <app-sources (onChange)="sourcesChanged($event)" (doSearch)="sendSearchToSearchBar($event)"></app-sources>
         </div>
         <div class="flex p-2">
-            <app-results [results]="results" [headers]="headers"></app-results>
+            <app-results [results]="results" [headers]="headers" [settings]="resultSettings"></app-results>
         </div>
     </div>

@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { clone } from 'lodash';
+import * as _ from 'lodash';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-results',
@@ -10,8 +11,10 @@ import { clone } from 'lodash';
 export class ResultsComponent {
   @Input('results') results = [];
   @Input('headers') headers = [];
+  @Input('settings') settings = [];
+  @ViewChild('dt', { static: true }) dt: Table | undefined;
   data = [];
-
+  sources = [{ 'site': 'feeds.nos.nl' }, { 'site': 'wikipedia.org' }]
 
   constructor(private sanitizer: DomSanitizer) {
 
@@ -20,11 +23,42 @@ export class ResultsComponent {
   ngOnInit(): void {
 
   }
+  log(e: any) {
+    console.log(e)
+  }
 
   ngOnChanges(event: any) {
+    const context = this;
+
     console.log(event)
     this.data = event.results
     this.headers = Object.assign(this.headers, this.headers)
+    this.settings = event.settings.currentValue;
+    if (typeof (this.settings) !== 'undefined') {
+
+
+
+      //hide columns and sort
+      Object.keys(this.settings).forEach((value: any) => {
+        Object.values(context.settings).forEach((siteSettings: any) => {
+          const site: any = Object.keys(siteSettings)[0];
+          const hideColumns = siteSettings[site]?.hideColumns
+          const priorityColumns = siteSettings[site]?.priorityColumns
+
+          if (typeof (hideColumns) !== 'undefined') {
+            console.log(hideColumns)
+            this.headers = _.filter(this.headers, (header) => {
+              return hideColumns.indexOf(header) === -1
+            })
+          }
+
+          if (typeof (priorityColumns) !== 'undefined') {
+            this.headers = _.orderBy(this.headers, priorityColumns)
+          }
+
+        })
+      })
+    }
   }
 
   solveChild(data: any, header: string) {
@@ -72,6 +106,20 @@ export class ResultsComponent {
     }
     else {
       return "text"
+    }
+  }
+
+  getHeaderType(header: string) {
+    //Todo: get from config
+    switch (header) {
+      case "title":
+        return "text";
+      case "index":
+        return "number";
+      case "site":
+        return "site";
+      default:
+        return "compact";
     }
   }
 

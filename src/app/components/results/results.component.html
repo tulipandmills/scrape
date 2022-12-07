@@ -1,4 +1,4 @@
-<p-table [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px">
+<p-table #dt [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" dataKey="title">
   <ng-template pTemplate="header">
     <tr>
       <ng-container *ngFor="let header of headers">
@@ -11,7 +11,37 @@
     <tr>
       <ng-container *ngFor="let header of headers">
         <th>
-          <p-columnFilter type="text" [field]="header" [placeholder]="'Zoek in ' + header"></p-columnFilter>
+          <ng-container [ngSwitch]="getHeaderType(header)">
+            <p-columnFilter *ngSwitchCase="'text'" type="text" [field]="header" [placeholder]="'Zoek in ' + header">
+            </p-columnFilter>
+            <p-columnFilter *ngSwitchCase="'number'" type="number" [field]="header" [placeholder]="'Zoek in ' + header">
+            </p-columnFilter>
+            <p-columnFilter *ngSwitchCase="'compact'" type="text" [field]="header" [display]="menu"
+              [placeholder]="'Zoek in ' + header">
+            </p-columnFilter>
+
+
+
+            <p-columnFilter *ngSwitchCase="'site'" [field]="site" matchMode="in" [showMatchModes]="false"
+              [showOperator]="false" [showAddButton]="false">
+
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect [ngModel]="site" [options]="sources" placeholder="Any"
+                  (onChange)="dt.filter($event.value,'site','in')" optionLabel="site" optionValue="site">
+                  <ng-template let-option pTemplate="item">
+                    <div class="p-multiselect-representative-option">
+                      <span class="ml-1">{{option.site}}</span>
+                    </div>
+                  </ng-template>
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
+
+
+
+
+            <p-columnFilter *ngSwitchDefault></p-columnFilter>
+          </ng-container>
         </th>
       </ng-container>
     </tr>

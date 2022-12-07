@@ -15,9 +15,17 @@ export class SearchbarComponent implements OnInit {
   headers: string[] = [];
   @Output() onResults = new EventEmitter();
   @Output() onHeadersChanged = new EventEmitter();
+  @Output() onReceivedSettings = new EventEmitter();
+
 
   @ViewChild('searchInput') searchInput: any;
-  constructor(private _searchService: SearchService, private messageService: MessageService) { }
+
+
+
+
+  constructor(private _searchService: SearchService, private messageService: MessageService) {
+
+  }
 
   @Input('disabled') disabled = false;
 
@@ -29,7 +37,7 @@ export class SearchbarComponent implements OnInit {
 
   onKeyPressHandler(e: any) {
     if (e.key == 'Enter') {
-      this.search(e,true);
+      this.search(e, true);
     }
   }
 
@@ -37,7 +45,7 @@ export class SearchbarComponent implements OnInit {
     this._searchService.searchInput = this.searchInput.nativeElement.value;
   }
 
-  search(e: any, notifyOnEmpty?:boolean) {
+  search(e: any, notifyOnEmpty?: boolean) {
     if (this._searchService.sources.length > 0) {
       let term = this._searchService.searchInput
       if (typeof (term) !== 'undefined' && term.length > 0) {
@@ -47,6 +55,7 @@ export class SearchbarComponent implements OnInit {
             if (typeof (r.body.data) !== 'undefined') {
               this.results = r.body.data;
               this.headers = r.body.headers;
+              this.onReceivedSettings.emit(r.body.resultSettings);
               this.messageService.clear('searchingMsg');
               this.messageService.add({ severity: 'success', summary: 'Klaar', detail: 'Er zijn ' + this.results.length + ' resultaten gevonden', key: 'otherMsg' });
               this.onResults.emit(this.results)
@@ -62,10 +71,10 @@ export class SearchbarComponent implements OnInit {
           }
         });
       } else {
-if(notifyOnEmpty){
-  this.messageService.add({ severity: 'info', summary: 'Zoekterm', detail: 'Vul hier uw zoekterm in, en druk op enter', key: 'otherMsg' });
-}
-  
+        if (notifyOnEmpty) {
+          this.messageService.add({ severity: 'info', summary: 'Zoekterm', detail: 'Vul hier uw zoekterm in, en druk op enter', key: 'otherMsg' });
+        }
+
       }
 
 

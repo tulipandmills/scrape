@@ -14,6 +14,7 @@ export class PanelComponent implements OnInit {
   searchbarDisabled: boolean = true;
   results = [];
   headers = [];
+  resultSettings: any;
 
 
 
@@ -36,9 +37,13 @@ export class PanelComponent implements OnInit {
   receivedHeaders(event: any) {
     this.headers = event;
   }
+  receivedSettings(event: any) {
+    this.resultSettings = event;
+
+  }
 
   sendSearchToSearchBar(event: any) {
-    this.searchbarComponent?.search(event)
+    this.searchbarComponent?.search(event, false)
   }
 
 }
