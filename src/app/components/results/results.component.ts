@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import { Table } from 'primeng/table';
@@ -6,7 +6,8 @@ import { Table } from 'primeng/table';
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.scss']
+  styleUrls: ['./results.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ResultsComponent {
   @Input('results') results = [];
@@ -14,7 +15,9 @@ export class ResultsComponent {
   @Input('settings') settings = [];
   @ViewChild('dt', { static: true }) dt: Table | undefined;
   data = [];
-  sources = [{ 'site': 'feeds.nos.nl' }, { 'site': 'wikipedia.org' }]
+  sources = [{ 'site': 'feeds.nos.nl' }, { 'site': 'wikipedia.org' }, { 'site': 'allekabels.nl' }]
+
+  showJsonDialog = false;
 
   constructor(private sanitizer: DomSanitizer) {
 
@@ -23,8 +26,8 @@ export class ResultsComponent {
   ngOnInit(): void {
 
   }
-  log(e: any) {
-    console.log(e)
+  toggleJsonDialog() {
+    this.showJsonDialog = !this.showJsonDialog;
   }
 
   ngOnChanges(event: any) {
@@ -99,6 +102,8 @@ export class ResultsComponent {
       } else {
         return "json";
       }
+    } else if (input.toString().indexOf("http") === 0 && input.toString().toLowerCase().indexOf(".jpg") > -1) {
+      return "imageurl";
     } else if (input.toString().lastIndexOf("<") > 50) {
       return "html";
     } else if (input.toString().substring(0, 4) === "http") {
@@ -125,6 +130,9 @@ export class ResultsComponent {
 
   cleanUrlFromImgObject(obj: any) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(obj.url);
+  }
+  cleanUrlFromImgUrl(urlStr: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(urlStr);
   }
 
   openWindow(url: string) {

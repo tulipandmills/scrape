@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ResultsComponent } from '../results/results.component';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 
 @Component({
@@ -11,6 +12,7 @@ export class PanelComponent implements OnInit {
 
   @Output() onResults = new EventEmitter();
   @ViewChild('searchBar') searchbarComponent: SearchbarComponent | undefined;
+  @ViewChild('resultsComponent') resultsComponent: ResultsComponent | undefined;
   searchbarDisabled: boolean = true;
   results = [];
   headers = [];
@@ -40,6 +42,10 @@ export class PanelComponent implements OnInit {
   receivedSettings(event: any) {
     this.resultSettings = event;
 
+  }
+
+  toggleJsonDialogOnResultsComponent() {
+    this.resultsComponent?.toggleJsonDialog()
   }
 
   sendSearchToSearchBar(event: any) {

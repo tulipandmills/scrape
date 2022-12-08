@@ -27,8 +27,11 @@ export class SourcesComponent implements OnInit {
 
   @Output() onChange = new EventEmitter();
   @Output() doSearch = new EventEmitter();
+  @Output() toggleJsonDialog = new EventEmitter();
   selectedSources = [];
   groupedSources: any;
+
+
 
 
   constructor(private _searchService: SearchService) {
@@ -57,6 +60,10 @@ export class SourcesComponent implements OnInit {
     if (values.value.length > 0) {
       this.doSearch.emit(values.value)
     }
+  }
+
+  emitToggleJsonDialog() {
+    this.toggleJsonDialog.emit();
   }
 
 

@@ -1,7 +1,12 @@
-
-<p-listbox (onChange)="setSources($event)" [checkbox]="true" [showToggleAll]="false" [options]="groupedSources" [(ngModel)]="selectedSources" [multiple]="true" optionLabel="label" optionValue="value">
-     <ng-template pTemplate="header">
+<p-listbox (onChange)="setSources($event)" [checkbox]="true" [showToggleAll]="false" [options]="groupedSources"
+    [(ngModel)]="selectedSources" [multiple]="true" optionLabel="label" optionValue="value">
+    <ng-template pTemplate="header">
         <i class="pi pi-database pr-3" style="font-size: 2rem"></i>
         <span class="text-xl font-medium text-700">Bronnen</span>
     </ng-template>
 </p-listbox>
+<div class="pt-2">
+    <button pButton (click)="emitToggleJsonDialog()" label="Toon data" [icon]="'pi pi-database'"
+        [class]="'p-button-text p-button-secondary'">
+    </button>
+</div>

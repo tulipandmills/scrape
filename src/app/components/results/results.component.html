@@ -1,3 +1,9 @@
+<p-dialog position="top" [(visible)]="showJsonDialog" position="top-right" maximizable="true"
+  [style]="{width: '70vw',height:'70vh'}">
+  <textarea style="width:'100%';height: 100%;">
+    {{results | json}}
+  </textarea>
+</p-dialog>
 <p-table #dt [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" dataKey="title">
   <ng-template pTemplate="header">
     <tr>
@@ -51,7 +57,10 @@
       <ng-container *ngFor="let header of headers; index as i">
         <ng-container [ngSwitch]="getType(solveChild(item,header))">
           <td *ngSwitchCase="'image'">
-            <p-image [src]="cleanUrlFromImgObject(item[header])" alt="Image" width="250" [preview]="true"></p-image>
+            <p-image [src]="cleanUrlFromImgObject(item[header])" alt="Image" width="150" [preview]="true"></p-image>
+          </td>
+          <td *ngSwitchCase="'imageurl'">
+            <p-image [src]="cleanUrlFromImgUrl(item[header])" alt="Image" width="150" [preview]="true"></p-image>
           </td>
           <td *ngSwitchCase="'html'">
             <p-scrollPanel [style]="{width: '100%', height: '200px'}">
