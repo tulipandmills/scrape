@@ -4,6 +4,7 @@
 <span class="p-input-icon-right">
   <i class="pi pi-search"></i>
   <input type="text" pInputText (keypress)="onKeyPressHandler($event)" [disabled]="disabled"
-    placeholder="Zoek hier naar uw trefwoord" [style.width]="'500px'" #searchInput
+    placeholder="Type hier uw trefwoord" [style.width]="'500px'" #searchInput
     (keyup)="updateValue(searchInput.value)" />
+  <button pButton [icon]="'pi pi-search'" class="ml-3" (click)="searchClick()"></button>
 </span>

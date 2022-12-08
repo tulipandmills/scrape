@@ -48,8 +48,8 @@ export class PanelComponent implements OnInit {
     this.resultsComponent?.toggleJsonDialog()
   }
 
-  sendSearchToSearchBar(event: any) {
-    this.searchbarComponent?.search(event, false)
+  sendSearchToSearchBar() {
+    this.searchbarComponent?.search(false)
   }
 
 }

@@ -37,15 +37,19 @@ export class SearchbarComponent implements OnInit {
 
   onKeyPressHandler(e: any) {
     if (e.key == 'Enter') {
-      this.search(e, true);
+      this.search(true);
     }
+  }
+
+  searchClick() {
+    this.search(true);
   }
 
   updateValue(e: any) {
     this._searchService.searchInput = this.searchInput.nativeElement.value;
   }
 
-  search(e: any, notifyOnEmpty?: boolean) {
+  search(notifyOnEmpty?: boolean) {
     if (this._searchService.sources.length > 0) {
       let term = this._searchService.searchInput
       if (typeof (term) !== 'undefined' && term.length > 0) {

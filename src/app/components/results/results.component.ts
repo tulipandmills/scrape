@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
+import { FilterMatchMode } from 'primeng/api';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -17,7 +18,29 @@ export class ResultsComponent {
   data = [];
   sources = [{ 'site': 'feeds.nos.nl' }, { 'site': 'wikipedia.org' }, { 'site': 'allekabels.nl' }]
 
+  contains = FilterMatchMode.CONTAINS;
+  textMatchModeOptions = [
+    {
+      label: 'Bevat',
+      value: FilterMatchMode.CONTAINS
+    },
+    {
+
+      label: 'Begint met',
+      value: FilterMatchMode.STARTS_WITH
+    },
+    {
+      label: 'Eindigt met',
+      value: FilterMatchMode.ENDS_WITH
+    },
+    {
+      label: 'Is exact',
+      value: FilterMatchMode.EQUALS
+    }];
+
   showJsonDialog = false;
+  showHTMLDialog = false;
+  dialogHTML = "";
 
   constructor(private sanitizer: DomSanitizer) {
 
@@ -28,6 +51,11 @@ export class ResultsComponent {
   }
   toggleJsonDialog() {
     this.showJsonDialog = !this.showJsonDialog;
+  }
+
+  popHTMLDialog(html: string) {
+    this.dialogHTML = html;
+    this.showHTMLDialog = true
   }
 
   ngOnChanges(event: any) {
@@ -104,7 +132,7 @@ export class ResultsComponent {
       }
     } else if (input.toString().indexOf("http") === 0 && input.toString().toLowerCase().indexOf(".jpg") > -1) {
       return "imageurl";
-    } else if (input.toString().lastIndexOf("<") > 50) {
+    } else if (input.toString().lastIndexOf("<") > 50 && input.toString().length > 100) {
       return "html";
     } else if (input.toString().substring(0, 4) === "http") {
       return "url";
@@ -123,6 +151,10 @@ export class ResultsComponent {
         return "number";
       case "site":
         return "site";
+      case "link":
+        return "url";
+      case "meta":
+        return "nofilter";
       default:
         return "compact";
     }

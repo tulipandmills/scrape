@@ -4,11 +4,17 @@
     {{results | json}}
   </textarea>
 </p-dialog>
-<p-table #dt [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px" dataKey="title">
+<p-dialog position="top" [(visible)]="showHTMLDialog" position="top" maximizable="true"
+  [style]="{width: '70vw',height:'70vh'}">
+  <div style="width:'100%';height: 100%;" [innerHTML]="dialogHTML"></div>
+</p-dialog>
+<p-table *ngIf="results.length" #dt [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px"
+  dataKey="title" [paginator]="true" [rows]="20" [showCurrentPageReport]="true" columnResizeMode="expand"
+  [breakpoint]="'960px'">
   <ng-template pTemplate="header">
     <tr>
       <ng-container *ngFor="let header of headers">
-        <th [pSortableColumn]="header" style="width:20%">
+        <th [pSortableColumn]="header" [class]="header === 'title'?'wider':''">
           {{header}}
           <p-sortIcon [field]="header"></p-sortIcon>
         </th>
@@ -18,14 +24,16 @@
       <ng-container *ngFor="let header of headers">
         <th>
           <ng-container [ngSwitch]="getHeaderType(header)">
-            <p-columnFilter *ngSwitchCase="'text'" type="text" [field]="header" [placeholder]="'Zoek in ' + header">
+            <p-columnFilter *ngSwitchCase="'text'" type="text" [field]="header" [placeholder]="'Zoek in ' + header"
+              [matchModeOptions]="textMatchModeOptions" matchMode="contains">
             </p-columnFilter>
             <p-columnFilter *ngSwitchCase="'number'" type="number" [field]="header" [placeholder]="'Zoek in ' + header">
             </p-columnFilter>
-            <p-columnFilter *ngSwitchCase="'compact'" type="text" [field]="header" [display]="menu"
-              [placeholder]="'Zoek in ' + header">
+            <p-columnFilter *ngSwitchCase="'compact'" type="text" [field]="header" [display]=""
+              [placeholder]="'Zoek in ' + header" [matchModeOptions]="textMatchModeOptions" matchMode="contains">
             </p-columnFilter>
-
+            <div *ngSwitchCase="'url'"></div>
+            <div *ngSwitchCase="'nofilter'"></div>
 
 
             <p-columnFilter *ngSwitchCase="'site'" [field]="site" matchMode="in" [showMatchModes]="false"
@@ -63,8 +71,9 @@
             <p-image [src]="cleanUrlFromImgUrl(item[header])" alt="Image" width="150" [preview]="true"></p-image>
           </td>
           <td *ngSwitchCase="'html'">
-            <p-scrollPanel [style]="{width: '100%', height: '200px'}">
-              <div class="htmlContainer" [innerHTML]="solveChild(item,header)"></div>
+            <p-scrollPanel [style]="{width: '100%', height: '200px', fontSize:'8px', cursor:'zoom-in'}">
+              <div class="htmlContainer" [innerHTML]="solveChild(item,header)"
+                (click)="popHTMLDialog(solveChild(item,header))"></div>
             </p-scrollPanel>
           </td>
           <td *ngSwitchCase="'url'">
@@ -72,7 +81,7 @@
               (click)="openWindow(solveChild(item,header))" [pTooltip]="solveChild(item,header)"
               tooltipPosition="bottom"></button>
           </td>
-          <td *ngSwitchDefault>{{solveChild(item,header)}}</td>
+          <td *ngSwitchDefault [innerHTML]="solveChild(item,header)"></td>
         </ng-container>
       </ng-container>
     </tr>
