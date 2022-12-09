@@ -28,8 +28,11 @@ export class SourcesComponent implements OnInit {
   @Output() onChange = new EventEmitter();
   @Output() doSearch = new EventEmitter();
   @Output() toggleJsonDialog = new EventEmitter();
-  selectedSources = [];
-  groupedSources: any;
+  selectedSources = ["allekabels.nl", "partsnl.nl"];
+  s: any;
+  groupedSources: { label: any; value: any; }[] | undefined;
+
+
 
 
 
@@ -45,13 +48,19 @@ export class SourcesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    const context = this;
+
     this._searchService.getSources().then((r: any) => {
       const items = r.body
       const m = _.mapValues(items, (item: any, key: any) => {
         return { label: item.human, value: key }
       });
       this.groupedSources = _.flatMap(m)
+      context._searchService.setSources(this.selectedSources)
+
+      this.onChange.emit(context._searchService.sources)
     })
+
   }
 
   setSources(values: any) {
@@ -65,6 +74,8 @@ export class SourcesComponent implements OnInit {
   emitToggleJsonDialog() {
     this.toggleJsonDialog.emit();
   }
+
+
 
 
 

@@ -40,7 +40,7 @@
               [showOperator]="false" [showAddButton]="false">
 
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                <p-multiSelect [ngModel]="site" [options]="sources" placeholder="Any"
+                <p-multiSelect [ngModel]="site" [options]="selectedSources" placeholder="Any"
                   (onChange)="dt.filter($event.value,'site','in')" optionLabel="site" optionValue="site">
                   <ng-template let-option pTemplate="item">
                     <div class="p-multiselect-representative-option">

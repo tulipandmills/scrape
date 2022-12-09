@@ -10,6 +10,7 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent {
   title = 'scrape';
+  showAbout = true;
 
   constructor(private primengConfig: PrimeNGConfig, private router: Router) { }
 
@@ -24,5 +25,9 @@ export class AppComponent {
   navigate(url: string) {
     setTimeout(() => { this.router.navigate([url]) }, 1)
     return true;
+  }
+
+  da() {
+    this.showAbout = !this.showAbout
   }
 }

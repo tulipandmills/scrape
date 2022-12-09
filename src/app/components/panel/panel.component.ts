@@ -17,6 +17,7 @@ export class PanelComponent implements OnInit {
   results = [];
   headers = [];
   resultSettings: any;
+  selectedSources: any;
 
 
 
@@ -29,6 +30,11 @@ export class PanelComponent implements OnInit {
 
   sourcesChanged(event: any) {
     this.searchbarDisabled = event.length === 0;
+    this.selectedSources = [];
+    Object.keys(event).forEach((source: any) => {
+      this.selectedSources.push({ 'site': event[source] })
+    });
+
   }
 
   receivedResults(event: any) {

@@ -20,7 +20,7 @@ export class SearchService {
     }
 
     const sources = this.sources.join("|");
-    const url = `http://localhost:3000/search/${sources}/${term}`;
+    const url = `https://doranpauka.com/scrapeapi/search/${sources}/${term}`;
     const request = new HttpRequest(
       "GET", url, {},
       { reportProgress: true });
@@ -39,7 +39,7 @@ export class SearchService {
 
 
   getSources = async () => {
-    const url = `http://localhost:3000/sites/meta`;
+    const url = `https://doranpauka.com/scrapeapi/sites/meta`;
     const request = new HttpRequest(
       "GET", url, {},
       { reportProgress: true });

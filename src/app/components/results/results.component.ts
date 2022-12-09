@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import { FilterMatchMode } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-results',
@@ -14,9 +15,12 @@ export class ResultsComponent {
   @Input('results') results = [];
   @Input('headers') headers = [];
   @Input('settings') settings = [];
+  @Input('selectedSources') selectedSources = [];
+
+
   @ViewChild('dt', { static: true }) dt: Table | undefined;
   data = [];
-  sources = [{ 'site': 'feeds.nos.nl' }, { 'site': 'wikipedia.org' }, { 'site': 'allekabels.nl' }]
+  sources: any[] = [];
 
   contains = FilterMatchMode.CONTAINS;
   textMatchModeOptions = [
@@ -42,11 +46,17 @@ export class ResultsComponent {
   showHTMLDialog = false;
   dialogHTML = "";
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private _searchService: SearchService) {
 
   }
 
   ngOnInit(): void {
+    this._searchService.getSources().then((s: any) => {
+      this.sources = [];
+      Object.keys(s.body).forEach((source: any) => {
+        this.sources.push({ site: source })
+      });
+    })
 
   }
   toggleJsonDialog() {
@@ -61,10 +71,9 @@ export class ResultsComponent {
   ngOnChanges(event: any) {
     const context = this;
 
-    console.log(event)
     this.data = event.results
     this.headers = Object.assign(this.headers, this.headers)
-    this.settings = event.settings.currentValue;
+    this.settings = event.settings?.currentValue;
     if (typeof (this.settings) !== 'undefined') {
 
 

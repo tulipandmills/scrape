@@ -17,6 +17,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ToastModule } from 'primeng/toast';
 import { ListboxModule } from 'primeng/listbox';
 import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
 
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
 import { FormsModule } from '@angular/forms';
@@ -54,7 +55,8 @@ import { ResultsComponent } from './components/results/results.component';
     ScrollPanelModule,
     ButtonModule,
     ToastModule,
-    DialogModule
+    DialogModule,
+    CardModule
   ],
   providers: [{ provide: MessageService }],
   bootstrap: [AppComponent]

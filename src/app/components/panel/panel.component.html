@@ -12,7 +12,8 @@
                 (toggleJsonDialog)="toggleJsonDialogOnResultsComponent()"></app-sources>
         </div>
         <div class="flex p-2" style="overflow: scroll;">
-            <app-results [results]="results" [headers]="headers" [settings]="resultSettings" #resultsComponent>
+            <app-results [results]="results" [headers]="headers" [settings]="resultSettings"
+                [selectedSources]="selectedSources" #resultsComponent>
             </app-results>
         </div>
     </div>
