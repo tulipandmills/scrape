@@ -1,6 +1,6 @@
-<div class="flex flex-column">
+<div class="flex flex-column surface-200">
     <div class="flex justify-content-center">
-        <div class="flex p-5">
+        <div class="flex p-5 pt-3">
             <app-searchbar (onResults)="receivedResults($event)" (onReceivedSettings)="receivedSettings($event)"
                 (onHeadersChanged)="receivedHeaders($event)" #searchBar></app-searchbar>
         </div>
@@ -11,7 +11,7 @@
             <app-sources (onChange)="sourcesChanged($event)" (doSearch)="sendSearchToSearchBar()"
                 (toggleJsonDialog)="toggleJsonDialogOnResultsComponent()"></app-sources>
         </div>
-        <div class="flex p-2" style="overflow: scroll;">
+        <div class="flex p-3" style="overflow: auto;">
             <app-results [results]="results" [headers]="headers" [settings]="resultSettings"
                 [selectedSources]="selectedSources" #resultsComponent>
             </app-results>

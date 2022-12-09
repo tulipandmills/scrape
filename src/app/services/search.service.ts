@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest } from "@angular/common/http";
 import { async } from '@angular/core/testing';
 import { catchError, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class SearchService {
     }
 
     const sources = this.sources.join("|");
-    const url = `https://doranpauka.com/scrapeapi/search/${sources}/${term}`;
+    const url = `${environment.apiUrl}/search/${sources}/${term}`;
     const request = new HttpRequest(
       "GET", url, {},
       { reportProgress: true });
@@ -39,7 +40,7 @@ export class SearchService {
 
 
   getSources = async () => {
-    const url = `https://doranpauka.com/scrapeapi/sites/meta`;
+    const url = `${environment.apiUrl}/sites/meta`;
     const request = new HttpRequest(
       "GET", url, {},
       { reportProgress: true });

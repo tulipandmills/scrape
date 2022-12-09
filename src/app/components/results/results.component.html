@@ -8,9 +8,9 @@
   [style]="{width: '70vw',height:'70vh'}">
   <div style="width:'100%';height: 100%;" [innerHTML]="dialogHTML"></div>
 </p-dialog>
-<p-table *ngIf="results.length" #dt [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="500px"
+<p-table *ngIf="results.length" #dt [value]="results" responsiveLayout="scroll" [scrollable]="true" scrollHeight="60vh"
   dataKey="title" [paginator]="true" [rows]="20" [showCurrentPageReport]="true" columnResizeMode="expand"
-  [breakpoint]="'960px'">
+  [breakpoint]="'960px'" [tableStyle]="{'min-width': '70vw'}">
   <ng-template pTemplate="header">
     <tr>
       <ng-container *ngFor="let header of headers">
